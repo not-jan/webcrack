@@ -24,7 +24,7 @@ export default {
 
 const matcher: m.Matcher<t.Expression> = m.or(
   m.binaryExpression(
-    m.or('+', '-', '*'),
+    m.or('+', '-', '*', '/'),
     m.matcher(node => matcher.match(node)),
     m.matcher(node => matcher.match(node))
   ),
@@ -38,6 +38,11 @@ const matcher: m.Matcher<t.Expression> = m.or(
       m.stringLiteral(),
       m.matcher(node => matcher.match(node))
     )
+  ),
+  m.binaryExpression(
+    m.or('>', '<'),
+    m.matcher(node => matcher.match(node)),
+    m.matcher(node => matcher.match(node))
   ),
   m.unaryExpression(
     '-',
