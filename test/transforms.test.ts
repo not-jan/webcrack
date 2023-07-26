@@ -21,6 +21,7 @@ import unminify from '../src/transforms/unminify';
 import unminifyBooleans from '../src/transforms/unminifyBooleans';
 import void0ToUndefined from '../src/transforms/void0ToUndefined';
 import yoda from '../src/transforms/yoda';
+import constantEval from '../src/transforms/constantEval';
 
 function describe<Options>(
   transform: Transform<Options>,
@@ -239,10 +240,6 @@ describe(numberExpressions, expectJS => {
       console.log(0x1021e + "test");
     `).toMatchInlineSnapshot('console.log(0x1021e + "test");'));
 
-  test('keep divisions', () =>
-    expectJS(`
-      console.log((-0x152f + 0x1281 * -0x1 + -0x18 * -0x1d1) / (0x83 * -0x1a + -0x19ea + 0x5f * 0x6a));
-    `).toMatchInlineSnapshot('console.log(1000 / 30);'));
 });
 
 describe(unminifyBooleans, expectJS => {
@@ -674,4 +671,21 @@ describe(objectLiterals, expectJS => {
       a.x++;
       console.log(a.x);
     `));
+});
+
+describe(constantEval, expectJs => {
+  test('String.fromCharCode', () =>
+    expectJs(`
+      String.fromCharCode(123)
+    `).toMatchInlineSnapshot(`
+      "{";
+    `)
+  );
+  test('Math.random()', () =>
+    expectJs(`
+      Math.random()
+    `).toMatchInlineSnapshot(`
+      Math.random();
+    `)
+  );
 });

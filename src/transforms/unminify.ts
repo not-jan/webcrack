@@ -14,6 +14,7 @@ import ternaryToIf from './ternaryToIf';
 import unminifyBooleans from './unminifyBooleans';
 import void0ToUndefined from './void0ToUndefined';
 import yoda from './yoda';
+import constantEval from './constantEval';
 
 export default {
   name: 'unminify',
@@ -27,6 +28,7 @@ export default {
       splitVariableDeclarations.visitor(),
       sequence.visitor(),
       numberExpressions.visitor(),
+      constantEval.visitor(),
       unminifyBooleans.visitor(),
       booleanIf.visitor(),
       ternaryToIf.visitor(),
