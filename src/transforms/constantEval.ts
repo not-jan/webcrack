@@ -2,6 +2,11 @@ import * as t from '@babel/types';
 import * as m from '@codemod/matchers';
 import { Transform } from '.';
 
+// Eliminate some opaque predicates using constant evaluation
+// e.g. a malicious agent using String.fromCharCode to hide a character constant.
+// The emulation is handled entirely by babel
+// This is marked as unsafe because I'm not sure if Babel knows how to deal with situations where the built-in
+// has been overwritten.
 export default {
   name: 'constantEval',
   tags: ['unsafe'],

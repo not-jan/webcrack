@@ -15,6 +15,10 @@ import unminifyBooleans from './unminifyBooleans';
 import void0ToUndefined from './void0ToUndefined';
 import yoda from './yoda';
 import constantEval from './constantEval';
+import naiveInline from './naiveInline';
+import controlFlowObject from '../deobfuscator/controlFlowObject';
+import deadParam from './deadParam';
+import deadVar from './deadVar';
 
 export default {
   name: 'unminify',
@@ -29,6 +33,10 @@ export default {
       sequence.visitor(),
       numberExpressions.visitor(),
       constantEval.visitor(),
+      deadParam.visitor(),
+      naiveInline.visitor(),
+      deadVar.visitor(),
+      controlFlowObject.visitor(),
       unminifyBooleans.visitor(),
       booleanIf.visitor(),
       ternaryToIf.visitor(),
